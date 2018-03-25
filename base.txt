@@ -1,0 +1,781 @@
+create database league;
+
+use league;
+
+create table field (
+    name VARCHAR(25) NOT NULL,
+    location VARCHAR(25) NOT NULL,
+    capacity INT(9) NOT NULL,
+    PRIMARY KEY(name)
+);
+
+create table president (
+    id INT(9) NOT NULL AUTO_INCREMENT,
+    name VARCHAR(25) NOT NULL,
+    age INT(9) NOT NULL,
+    des TEXT NOT NULL,
+    PRIMARY KEY(id)
+);
+
+create table coach ( 
+    id INT(9) NOT NULL AUTO_INCREMENT,
+    name VARCHAR(25) NOT NULL,
+    age INT(9) NOT NULL,
+    won INT(9),
+    lost INT(9),
+    tie INT(9), 
+    des TEXT NOT NULL,
+    PRIMARY KEY(id)
+);
+
+create table team (
+    name VARCHAR(25),
+    pre_id INT(9) NOT NULL,
+    co_id INT(9) NOT NULL,
+    points INT(9),
+    given INT(9),
+    taken INT(9),
+    won INT(9),
+    lost INT(9),
+    tie INT(9),
+    base VARCHAR(25) NOT NULL,
+    PRIMARY KEY(name),
+    CONSTRAINT BS
+    FOREIGN KEY(base) REFERENCES field(name),
+    CONSTRAINT PR
+    FOREIGN KEY(pre_id) REFERENCES president(id),
+    CONSTRAINT CO
+    FOREIGN KEY(co_id) REFERENCES coach(id)
+);
+
+create table ref (
+    id INT(9) NOT NULL AUTO_INCREMENT,
+    name VARCHAR(25) NOT NULL,
+    age INT(9) NOT NULL,
+    PRIMARY KEY(id)
+);
+
+create table matc (
+    id INT(9) NOT NULL AUTO_INCREMENT,
+    dt DATETIME NOT NULL,
+    score VARCHAR(25) NOT NULL,
+    result VARCHAR(25) NOT NULL,
+    des TEXT NOT NULL,
+    team1 VARCHAR(25) NOT NULL,
+    team2 VARCHAR(25) NOT NULL,
+    location VARCHAR(25) NOT NULL,
+    r1 INT(9) NOT NULL,
+    ro1 VARCHAR(25) NOT NULL,
+    r2 INT(9) NOT NULL,
+    ro2 VARCHAR(25) NOT NULL,
+    r3 INT(9) NOT NULL,
+    ro3 VARCHAR(25) NOT NULL,
+    r4 INT(9) NOT NULL,
+    ro4 VARCHAR(25) NOT NULL,
+    r5 INT(9) NOT NULL,
+    ro5 VARCHAR(25) NOT NULL,
+    PRIMARY KEY(id),
+    CONSTRAINT R1
+    FOREIGN KEY(r1) REFERENCES ref(id),
+    CONSTRAINT R2
+    FOREIGN KEY(r2) REFERENCES ref(id),
+    CONSTRAINT R3
+    FOREIGN KEY(r3) REFERENCES ref(id),
+    CONSTRAINT R4
+    FOREIGN KEY(r4) REFERENCES ref(id),
+    CONSTRAINT R5
+    FOREIGN KEY(r5) REFERENCES ref(id),
+    CONSTRAINT T1
+    FOREIGN KEY(team1) REFERENCES team(name),
+    CONSTRAINT T2
+    FOREIGN KEY(team2) REFERENCES team(name),
+    CONSTRAINT FL
+    FOREIGN KEY(location) REFERENCES field(name)   
+);
+
+create table ticket (
+    id INT(9) NOT NULL AUTO_INCREMENT,
+    type VARCHAR(25) NOT NULL,
+    PRIMARY KEY(id)
+);
+
+create table player (
+    id INT(9) NOT NULL AUTO_INCREMENT,
+    name VARCHAR(25) NOT NULL,
+    age INT(9) NOT NULL,
+    team VARCHAR(25) NOT NULL,
+    goals INT(9) NOT NULL,
+    des TEXT NOT NULL,
+    pos VARCHAR(25),
+    PRIMARY KEY(id),
+    CONSTRAINT TM2
+    FOREIGN KEY(team) REFERENCES team(name)
+);
+
+create table supporter (
+    id INT(9) NOT NULL AUTO_INCREMENT,
+    name VARCHAR(25) NOT NULL,
+    age INT(9) NOT NULL,
+    team VARCHAR(25) NOT NULL,
+    p_id INT(9) NOT NULL,
+    t_id INT(9) NOT NULL,
+    renew INT(1) NOT NULL,
+    PRIMARY KEY(id),
+    CONSTRAINT up
+    FOREIGN KEY(p_id) REFERENCES player(id),
+    CONSTRAINT TK
+    FOREIGN KEY(t_id) REFERENCES ticket(id)
+);
+
+create table attended (
+    id INT(9) NOT NULL AUTO_INCREMENT,
+    m_id INT(9) NOT NULL,
+    s_id INT(9) NOT NULL,
+    PRIMARY KEY(id),
+    CONSTRAINT MID
+    FOREIGN KEY(m_id) REFERENCES matc(id),
+    CONSTRAINT SID
+    FOREIGN KEY(s_id) REFERENCES supporter(id)
+);
+
+INSERT INTO field VALUES (
+    "Patraiko","Patra","1000"
+);
+
+INSERT INTO field VALUES (
+    "Athinaiko","Athens","2000"
+);
+
+INSERT INTO president VALUES (
+    0,"Memos Theodor",21,"Polla kala"
+);
+
+INSERT INTO president VALUES (
+    0,"Pavlos Kamoulakos",21,"Kalos"
+);
+
+INSERT INTO president VALUES (
+    0,"Thomas Kouk",21,"Kakos"
+);
+
+INSERT INTO president VALUES (
+    0,"George Mar",21,"Apisteutos"
+);
+
+INSERT INTO coach VALUES (
+    0,"Marianth Dmt",21,3,2,1,"Olo xanei"
+);
+
+INSERT INTO coach VALUES (
+    0,"Pavlos Vraxnis",21,1,4,1,"Polles nikes"
+);
+
+INSERT INTO coach VALUES (
+    0,"Nikos Kappa",21,3,2,1,"Kalos gia thn omada"
+);
+
+INSERT INTO coach VALUES (
+    0,"Nightblue3 Boosted",21,2,1,3,"Kalos me tous paixtes"
+);
+
+INSERT INTO team VALUES (
+    "Athinaikos",1,1,10,10,6,3,2,1,"Athinaiko"
+);
+
+INSERT INTO team VALUES (
+    "Patraikos",3,3,10,9,10,3,2,1,"Patraiko"
+);
+
+INSERT INTO team VALUES (
+    "Athinaikos2",2,4,9,9,8,2,1,3,"Athinaiko"
+);
+
+INSERT INTO team VALUES (
+    "Patraikos2",4,2,4,10,14,1,4,1,"Patraiko"
+);
+
+INSERT INTO ref VALUES (
+    0,"Zak Glp",21
+);
+
+INSERT INTO ref VALUES (
+    0,"Nikol Xristodoul",21
+);
+
+INSERT INTO ref VALUES (
+    0,"Kati1",21
+);
+
+INSERT INTO ref VALUES (
+    0,"Kati2",21
+);
+
+INSERT INTO ref VALUES (
+    0,"Kati3",21
+);
+
+INSERT INTO ref VALUES (
+    0,"Kati4",21
+);
+
+INSERT INTO ref VALUES (
+    0,"Kati5",21
+);
+
+INSERT INTO ref VALUES (
+    0,"Kati6",21
+);
+
+INSERT INTO ref VALUES (
+    0,"Kati7",21
+);
+
+INSERT INTO ref VALUES (
+    0,"Kati8",21
+);
+
+INSERT INTO matc VALUES (
+    0,"2017-01-18 20:15:00","1-0","1","10:1-0 Gerard Pique","Patraikos","Patraikos2","Patraiko",1,"Diaititis",2,"Epoptis",3,"Epoptis",4,"4os",5,"Paratiriths"
+);
+
+INSERT INTO matc VALUES (
+    0,"2017-01-18 21:15:00","4-3","1","10:1-0 Gerard Pique,11:2-0 Gerard Pique,19:3-0 I. Rakitic,24:4-0 I. Rakitic,32:4-1 Anaksimantros,44:4-2 Paco Alcacar,89:4-3 Jordi Alba","Patraikos","Patraikos2","Patraiko",1,"Diaititis",2,"Epoptis",3,"Epoptis",4,"4os",5,"Paratiriths"
+);
+
+INSERT INTO matc VALUES (
+    0,"2017-01-22 21:45:00","1-1","X","57:1-0 Luis Suarez,90:1-1 Takis Stergiou","Athinaikos","Athinaikos2","Athinaiko",5,"Diaititis",6,"Epoptis",7,"Epoptis",8,"4os",10,"Paratiriths"
+);
+
+INSERT INTO matc VALUES (
+    0,"2017-01-22 21:45:00","1-0","1","78:1-0 Luis Suarez","Athinaikos","Athinaikos2","Athinaiko",5,"Diaititis",6,"Epoptis",7,"Epoptis",8,"4os",10,"Paratiriths"
+);
+
+INSERT INTO matc VALUES (
+    0,"2017-01-22 21:45:00","2-1","1","56:1-0 I. Rakitic,66:2-0 I. Rakitic,78:2-1 Luis Suarez","Patraikos","Athinaikos","Patraiko",1,"Diaititis",2,"Epoptis",3,"Epoptis",4,"4os",5,"Paratiriths"
+);
+
+INSERT INTO matc VALUES (
+    0,"2017-01-15 21:45:00","0-3","2","11:0-1 Lionel Messi,28:0-2 Lionel Messi,90:0-3 Lionel Messi","Patraikos","Athinaikos","Patraiko",5,"Diaititis",6,"Epoptis",7,"Epoptis",8,"4os",10,"Paratiriths"
+);
+
+INSERT INTO matc VALUES (
+    0,"2017-01-15 21:45:00","2-2","X","15:1-0 I. Rakitic,17:2-0 Stergios Stergiou,29:2-1 Takhs Stergiou,33:2-2 Takhs Stergiou","Patraikos","Athinaikos2","Athinaiko",1,"Diaititis",2,"Epoptis",3,"Epoptis",4,"4os",5,"Paratiriths"
+);
+
+INSERT INTO matc VALUES (
+    0,"2017-01-08 21:45:00","0-1","2","89:0-1 Takhs Stergiou","Patraikos","Athinaikos2","Patraiko",5,"Diaititis",6,"Epoptis",7,"Epoptis",8,"4os",10,"Paratiriths"
+);
+
+INSERT INTO matc VALUES (
+    0,"2017-01-08 21:45:00","3-2","1","56:1-0 Jordi Alba,60:2-0 Jordi Alba,69:3-0 Jordi Alba,70:3-1 Lionel Messi,78:3-2 Lionel Messi","Patraikos2","Athinaikos","Patraiko",1,"Diaititis",2,"Epoptis",3,"Epoptis",4,"4os",5,"Paratiriths"
+);
+
+INSERT INTO matc VALUES (
+    0,"2016-12-18 21:45:00","0-2","2","50:0-1 Lionel Messi,55:0-2 Lionel Messi","Patraikos2","Athinaikos","Patraiko",5,"Diaititis",6,"Epoptis",7,"Epoptis",8,"4os",10,"Paratiriths"
+);
+
+INSERT INTO matc VALUES (
+    0,"2016-12-18 21:45:00","2-3","2","16:1-0 Jordi Alba,19:2-0 L. Digne,23:2-1 Denis Suarez,29:2-2 Denis Suarez,90:2-3 Denis Suarez","Patraikos2","Athinaikos2","Patraiko",1,"Diaititis",2,"Epoptis",3,"Epoptis",4,"4os",5,"Paratiriths"
+);
+
+INSERT INTO matc VALUES (
+    0,"2016-12-11 21:45:00","2-2","X","14:1-0 Jordi Alba,19:2-0 Jordi Alba,27:2-1 Denis Suarez,45:2-2 Arda Turan","Patraikos2","Athinaikos2","Patraiko",5,"Diaititis",6,"Epoptis",7,"Epoptis",8,"4os",10,"Paratiriths"
+);
+
+INSERT INTO matc VALUES (
+    0,"2017-04-16 21:45:00","0","0","0","Patraikos","Patraikos2","Patraiko",1,"Diaititis",2,"Epoptis",3,"Epoptis",4,"4os",5,"Paratiriths"
+);
+
+INSERT INTO matc VALUES (
+    0,"2017-04-16 21:45:00","0","0","0","Athinaikos","Athinaikos2","Athinaiko",1,"Diaititis",2,"Epoptis",3,"Epoptis",4,"4os",5,"Paratiriths"
+);
+
+INSERT INTO ticket VALUES (
+    0,"Aplo"
+);
+
+INSERT INTO ticket VALUES (
+    0,"Aplo"
+);
+
+INSERT INTO ticket VALUES (
+    0,"Diarkias"
+);
+
+INSERT INTO ticket VALUES (
+    0,"Diarkias"
+);
+
+INSERT INTO player VALUES (
+    0,"Ter Stegen",25,"Patraikos",0,"Kalos einai mwre","Terma"
+);
+
+INSERT INTO player VALUES (
+    0,"Zerard Pique",30,"Patraikos",2,"Kalos einai mwre2","Amyna"
+);
+
+INSERT INTO player VALUES (
+    0,"I. Rakitic",29,"Patraikos",6,"Kalos einai mwre3","Kentro"
+);
+
+INSERT INTO player VALUES (
+    0,"Stergios Stergiou",25,"Patraikos",1,"Anaphros","Epithetikos"
+);
+
+INSERT INTO player VALUES (
+    0,"Takhs Stergiou",29,"Athinaikos2",3,"Anaphros2","Epithetikos"
+);
+
+INSERT INTO player VALUES (
+    0,"Sergio Busquets",31,"Athinaikos2",1,"Anaphros3","Kentro"
+);
+
+INSERT INTO player VALUES (
+    0,"Denis Suarez",19,"Athinaikos2",4,"Anaphros4","Kentro"
+);
+
+INSERT INTO player VALUES (
+    0,"Arda Turan",29,"Athinaikos2",1,"Anaphros5","Kentro"
+);
+
+INSERT INTO player VALUES (
+    0,"Tasos Pantos",35,"Athinaikos",0,"Metrios","Amuntikos"
+);
+
+INSERT INTO player VALUES (
+    0,"A. Iniesta",34,"Athinaikos",0,"Metrios","Kentro"
+);
+
+INSERT INTO player VALUES (
+    0,"Luis Suarez",25,"Athinaikos",3,"Kalos","Epithetikos"
+);
+
+INSERT INTO player VALUES (
+    0,"Lionel Messi",29,"Athinaikos",7,"Apisteftos","Epithetikos"
+);
+
+INSERT INTO player VALUES (
+    0,"Anaksimantros Katu",75,"Patraikos2",1,"Kati1","Amuntikos"
+);
+
+INSERT INTO player VALUES (
+    0,"Paco Alcacar",19,"Patraikos2",1,"Kati1","Kentro"
+);
+
+INSERT INTO player VALUES (
+    0,"Jordi Alba",30,"Patraikos2",5,"Kati2","Amuna"
+);
+
+INSERT INTO player VALUES (
+    0,"L. Digne",21,"Patraikos2",3,"Kati3","Amuna"
+);
+
+INSERT INTO supporter VALUES (
+    0,"Giannis Antetokoumpos",29,"Athinaikos",4,1,0
+);
+
+INSERT INTO supporter VALUES (
+    0,"Antreas Antetokous",25,"Patraikos",10,3,0
+);
+
+INSERT INTO supporter VALUES (
+    0,"Antreas",25,"Patraikos2",16,2,1
+);
+
+INSERT INTO supporter VALUES (
+    0,"Nikos",56,"Athinaikos2",12,4,1
+);
+
+
+INSERT INTO attended VALUES (
+    0,1,1
+);
+
+INSERT INTO attended VALUES (
+    0,1,2
+);
+
+INSERT INTO attended VALUES (
+    0,2,2
+);
+
+INSERT INTO attended VALUES (
+    0,1,3
+);
+
+INSERT INTO attended VALUES (
+    0,11,1
+);
+
+INSERT INTO attended VALUES (
+    0,2,3
+);
+
+INSERT INTO attended VALUES (
+    0,3,3
+);
+
+INSERT INTO attended VALUES (
+    0,4,3
+);
+
+INSERT INTO attended VALUES (
+    0,5,3
+);
+
+INSERT INTO attended VALUES (
+    0,6,3
+);
+
+INSERT INTO attended VALUES (
+    0,7,3
+);
+
+INSERT INTO attended VALUES (
+    0,8,3
+);
+
+INSERT INTO attended VALUES (
+    0,9,3
+);
+
+INSERT INTO attended VALUES (
+    0,10,3
+);
+
+INSERT INTO attended VALUES (
+    0,1,4
+);
+
+INSERT INTO attended VALUES (
+    0,2,4
+);
+
+INSERT INTO attended VALUES (
+    0,3,4
+);
+
+INSERT INTO attended VALUES (
+    0,4,4
+);
+
+INSERT INTO attended VALUES (
+    0,5,4
+);
+
+INSERT INTO attended VALUES (
+    0,6,4
+);
+
+INSERT INTO attended VALUES (
+    0,7,4
+);
+
+INSERT INTO attended VALUES (
+    0,8,4
+);
+
+INSERT INTO attended VALUES (
+    0,9,4
+);
+
+INSERT INTO attended VALUES (
+    0,10,4
+);
+
+DELIMITER $
+CREATE PROCEDURE mxp() /*Ερωτημα 1*/
+BEGIN
+    DECLARE tname VARCHAR(25);
+    DECLARE cid INT(9);
+    DECLARE pid INT(9);
+    DECLARE cdes TEXT;
+    DECLARE pdes TEXT;
+    DECLARE cur CURSOR FOR
+      SELECT name,pre_id , co_id FROM team ORDER BY points DESC;
+    OPEN cur;
+    FETCH cur INTO tname , pid , cid;
+    CLOSE cur;
+    SELECT des INTO cdes FROM coach WHERE cid=id;
+    SELECT des INTO pdes FROM president WHERE pid=id;
+    SELECT tname AS "Team name", cdes AS "Coach CV" , pdes AS "President CV";
+END$
+DELIMITER ;
+
+DELIMITER $
+CREATE PROCEDURE mxg() /*Ερωτημα 2*/
+BEGIN
+    DECLARE pname VARCHAR(25);
+    DECLARE pgoals INT(9);
+    DECLARE pname2 VARCHAR(25);
+    DECLARE pgoals2 INT(9);
+    DECLARE fgoal INT(9);
+    DECLARE cur CURSOR FOR
+      SELECT name , goals FROM player ORDER BY goals DESC;
+    OPEN cur;
+    FETCH cur INTO pname,pgoals;
+    FETCH cur INTO pname2,pgoals2;
+
+    SET fgoal=pgoals-pgoals2;
+    SELECT pname AS "Scorer" , fgoal AS "Goal Dif";
+END$
+DELIMITER ;
+
+DELIMITER $
+CREATE PROCEDURE mvp() /*Ερωτημα 3*/
+BEGIN 
+    DECLARE tname VARCHAR(25);
+    DECLARE flag INT(9);
+    DECLARE cur CURSOR FOR
+      SELECT name FROM team;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET flag=1;
+    OPEN cur;
+    SET flag=0;
+    FETCH cur INTO tname;
+    WHILE (flag=0) DO
+      SELECT name FROM player WHERE team=tname ORDER BY goals DESC LIMIT 3;
+      FETCH cur INTO tname;
+    END WHILE;
+    CLOSE cur;
+END$
+DELIMITER ;
+
+DELIMITER $
+CREATE PROCEDURE tkt() /*Ερωτημα 4*/
+BEGIN 
+    DECLARE tname VARCHAR(25);
+    DECLARE flag INT(9);
+    DECLARE flag2 INT(9);
+    DECLARE cur CURSOR FOR
+      SELECT name FROM team;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET flag=1;
+    OPEN cur;
+    SET flag=0;
+    FETCH cur INTO tname;
+    WHILE (flag=0) DO  
+      SELECT tname AS "Team Name" , count(*) AS "Diarkias" FROM supporter INNER JOIN ticket on supporter.t_id=ticket.id WHERE tname=supporter.team AND ticket.type LIKE "%Diarkias%";
+      SELECT name AS "Katoxoi" FROM supporter INNER JOIN ticket on supporter.t_id=ticket.id WHERE tname=supporter.team AND ticket.type LIKE "%Diarkias%";
+      FETCH cur into tname;
+    END WHILE;
+    CLOSE cur;
+END$
+DELIMITER ;
+      
+DELIMITER $
+CREATE PROCEDURE tct() /*Ερωτημα 5*/
+BEGIN 
+    DECLARE sid INT(9);
+    DECLARE ren INT(9);
+    DECLARE flag INT(9);
+    DECLARE cur CURSOR FOR
+        SELECT s_id FROM attended GROUP BY s_id ORDER BY count(*) DESC;
+    OPEN cur;
+    FETCH cur INTO sid;
+    CLOSE cur;
+    SELECT renew INTO ren FROM supporter WHERE id=sid;
+    IF (ren=1) THEN 
+        SELECT name , "Renew invitation sent" FROM supporter WHERE id=sid;
+    ELSE
+        SELECT name , "Renew invitation not sent" FROM supporter WHERE id=sid;
+    END IF;
+    SELECT matc.id ,matc.dt FROM matc WHERE matc.id NOT IN (SELECT matc.id FROM matc LEFT JOIN attended ON matc.id=attended.m_id WHERE attended.s_id=sid) AND dt < NOW();
+END$
+DELIMITER ;
+
+DELIMITER $
+CREATE PROCEDURE fpc() /*Ερωτημα 6*/
+BEGIN
+    DECLARE tname VARCHAR(25);
+    DECLARE pid INT(9);
+    DECLARE cid INT(9);
+    DECLARE flag INT(9); 
+    SELECT name , pre_id, co_id  INTO tname , pid , cid FROM team ORDER BY taken - given DESC LIMIT 1;
+    SELECT base FROM team WHERE name=tname;
+    SELECT * FROM president WHERE id=pid;
+    SELECT * FROM coach WHERE id=cid;
+END$
+DELIMITER ;
+
+DELIMITER $ 
+CREATE PROCEDURE fav(IN tname VARCHAR(25)) /*Οι παικτες και οι οπαδοι μιας ομαδας*/
+BEGIN
+    SELECT * FROM player WHERE team=tname;
+    SELECT * FROM supporter WHERE team=tname;
+END$
+DELIMITER ;
+
+DELIMITER $
+CREATE PROCEDURE yet() /*Οι αγωνες που δεν εχουν γινει ακομα*/
+BEGIN
+SELECT * FROM matc WHERE result = "0";
+END$
+DELIMITER ;
+
+DELIMITER $
+CREATE PROCEDURE pre(IN t1 VARCHAR(25),IN t2 VARCHAR(25)) /*Αποτελεσματα μεταξυ τους αγωνων*/
+BEGIN
+    SELECT result,score FROM matc WHERE result <> "0" AND team1=t1 AND team2=t2;
+END$
+DELIMITER ;
+
+DELIMITER $ 
+CREATE PROCEDURE att(IN mid INT(9)) /*Ποιοι οπαδοι πηγαν σε ποιον αγωνα*/
+BEGIN  
+    SELECT * FROM supporter INNER JOIN attended ON supporter.id=attended.s_id WHERE attended.m_id=mid;
+END$
+DELIMITER ;
+
+/*Για φιλαθλο*/
+
+DELIMITER $
+CREATE PROCEDURE gol(IN id INT(9)) /*Διαφορα τερματων*/
+BEGIN
+    DECLARE tm VARCHAR(25);
+    SELECT supporter.team INTO tm FROM supporter WHERE supporter.id=id;
+    SELECT name , given-taken FROM team WHERE tm=team.name;
+END$
+DELIMITER ;
+
+DELIMITER $
+CREATE PROCEDURE fgol(IN id INT(9)) /*Γκολ αγαπημενου παικτη*/
+BEGIN
+    DECLARE pl VARCHAR(25);
+    SELECT supporter.p_id INTO pl FROM supporter WHERE supporter.id=id;
+    SELECT name , goals FROM player WHERE player.id=pl;
+END$
+DELIMITER ;
+
+DELIMITER $
+CREATE PROCEDURE ren(IN id INT(9)) /*Ανανεωση*/
+BEGIN 
+    SELECT name , renew FROM supporter WHERE id=supporter.id;
+END$
+DELIMITER ;
+
+DELIMITER $
+CREATE PROCEDURE matchid(IN m_id INT(9)) /*Αγωνες που εγιναν η θα γινουν*/
+BEGIN
+    DECLARE rf1 INT(9);
+    DECLARE rf2 INT(9);
+    DECLARE rf3 INT(9);
+    DECLARE rf4 INT(9);
+    DECLARE rf5 INT(9);
+    DECLARE name1 VARCHAR(25);
+    DECLARE name2 VARCHAR(25);
+    DECLARE name3 VARCHAR(25);
+    DECLARE name4 VARCHAR(25);
+    DECLARE name5 VARCHAR(25);
+    DECLARE ds TEXT;
+    DECLARE dts DATETIME;
+    DECLARE loc VARCHAR(25);
+    SELECT des INTO ds FROM matc WHERE matc.id=m_id;
+    IF (ds NOT LIKE "0") THEN 
+        SELECT dt AS dts,des AS ds,score FROM matc WHERE matc.id=m_id;
+    ELSE 
+        SELECT dt,des,location INTO dts , ds , loc FROM matc WHERE matc.id=m_id;
+        SELECT r1,r2,r3,r4,r5 INTO rf1,rf2,rf3,rf4,rf5 FROM matc WHERE matc.id=m_id;
+        SELECT name INTO name1 FROM ref WHERE ref.id=rf1;
+        SELECT name INTO name2 FROM ref WHERE ref.id=rf2;
+        SELECT name INTO name3 FROM ref WHERE ref.id=rf3;
+        SELECT name INTO name4 FROM ref WHERE ref.id=rf4;
+        SELECT name INTO name5 FROM ref WHERE ref.id=rf5;
+        SELECT dts,ds,loc,name1,name2,name3,name4,name5;
+    END IF;
+END$
+DELIMITER ;
+
+DELIMITER $
+CREATE PROCEDURE ats(IN id INT(9)) /*Αγωνες που παρακολουθησε*/
+BEGIN
+    SELECT matc.id,matc.dt,matc.score,matc.result,matc.des,matc.team1,matc.team2,matc.location FROM attended INNER JOIN supporter ON supporter.id=attended.s_id AND supporter.id=id INNER JOIN matc ON matc.id=attended.m_id;
+END$
+DELIMITER ;
+
+/*Για διαιτητη*/
+
+DELIMITER $
+CREATE PROCEDURE rf(IN id INT(9)) /*Αγωνες στους οποιους σφηραει*/
+BEGIN
+    SELECT r1,ro1,r2,ro2,r3,ro3,r4,ro4,r5,ro5,dt,location,team1,team2 FROM matc WHERE des LIKE "0" AND (r1=id OR r2=id OR r3=id OR r4=id OR r5=id);
+END$
+DELIMITER ;
+
+/*Για προπονητη*/
+
+DELIMITER $
+CREATE PROCEDURE onmc(IN id INT(9)) /*Επομενοι αγωνες*/
+BEGIN 
+    DECLARE tm VARCHAR(25);
+    SELECT name INTO tm from team WHERE co_id=id;
+    SELECT dt , location FROM matc WHERE des LIKE "0" AND (team1=tm OR team2=tm);
+END$
+DELIMITER ;
+    
+DELIMITER $
+CREATE PROCEDURE st(IN id INT(9)) /*Στατιστικα*/
+BEGIN
+    DECLARE tm VARCHAR(25);
+    SELECT name INTO tm from team WHERE co_id=id;
+    SELECT name , points , given , taken ,won ,lost ,tie FROM team WHERE tm=name;
+END$
+DELIMITER ;
+
+DELIMITER $
+CREATE PROCEDURE plr(IN id INT(9)) /*Παικτες*/
+BEGIN 
+    DECLARE tm VARCHAR(25);
+    SELECT name INTO tm from team WHERE co_id=id;
+    SELECT player.name FROM player WHERE team=tm;
+END$
+DELIMITER ;
+
+DELIMITER $
+CREATE PROCEDURE adpl(IN id INT(9),IN pname VARCHAR(25), IN il INT(9) ,IN gl VARCHAR(25) , IN ds TEXT, IN ps VARCHAR(25)) /*Εισαγωγη νεοι παικτη*/
+BEGIN   
+    DECLARE tm VARCHAR(25);
+    SELECT team.name INTO tm from team WHERE co_id=id;
+    INSERT INTO player VALUES (
+    0,pname,il,tm,gl,ds,ps
+    );
+END$
+DELIMITER ;
+
+/*Για προεδρο*/
+
+DELIMITER $
+CREATE PROCEDURE mon(IN id INT(9)) /*Εσοδα*/
+BEGIN
+    DECLARE mon INT(9);
+    DECLARE mon2 INT(9);
+    DECLARE tm VARCHAR(25);
+    SET mon=0;
+    SELECT team.name INTO tm from team WHERE pre_id=id;
+    SELECT 200*count(ticket.type) INTO mon FROM supporter INNER JOIN ticket on supporter.t_id=ticket.id  WHERE supporter.team=tm AND ticket.type LIKE "Diarkias" GROUP BY ticket.type;
+    SELECT 10*count(*) INTO mon2 FROM supporter INNER JOIN ticket on supporter.t_id=ticket.id AND supporter.team=tm AND ticket.type LIKE "Aplo" INNER JOIN attended on supporter.id=attended.s_id;
+    SELECT mon+mon2 AS m;
+END$
+DELIMITER ;
+
+DELIMITER $
+CREATE PROCEDURE tik(IN id INT(9)) /*Εισιτηρια*/
+BEGIN  
+    DECLARE tm VARCHAR(25);
+    DECLARE mon INT(9);
+    DECLARE mon2 INT(9);
+    SET mon=0;
+    SET mon2=0;
+    SELECT team.name INTO tm from team WHERE pre_id=id;
+    SELECT count(ticket.type) INTO mon FROM supporter INNER JOIN ticket on supporter.t_id=ticket.id  WHERE supporter.team=tm AND ticket.type LIKE "Diarkias" GROUP BY ticket.type;
+    SELECT count(*) INTO mon2 FROM supporter INNER JOIN ticket on supporter.t_id=ticket.id AND supporter.team=tm AND ticket.type LIKE "Aplo" INNER JOIN attended on supporter.id=attended.s_id;
+    SELECT mon AS Diarkias, mon2 AS Apla ;
+END$
+DELIMITER ;
+
+DELIMITER $
+CREATE PROCEDURE up(IN id INT(9),IN sd INT(9)) /*Αιτηση για ανανεωση*/
+BEGIN
+    DECLARE tm VARCHAR(25);
+    SELECT team.name INTO tm from team WHERE pre_id=id;
+    UPDATE supporter SET renew=1 WHERE supporter.id=sd AND supporter.team=tm;
+END$
+DELIMITER ;
